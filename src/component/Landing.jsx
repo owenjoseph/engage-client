@@ -1,5 +1,17 @@
 import React, { Component } from 'react';
 import styles from './Landing.scss'
+import AgendaItem from './agenda_item.jsx';
+require('font-awesome-webpack');
+
+let agendaItem = {
+  title: 'Construction Contract for Airport Roof Acrylic Application',
+  meeting_time: 1506472200,
+  primary_tag: 'handicap',
+  tags: [
+    'construction',
+    'airport',
+  ],
+};
 
 const Landing = (props) =>{
   return (
@@ -54,6 +66,9 @@ const Landing = (props) =>{
           </div>
         </div>
       </section>
+
+      <AgendaItem {...agendaItem} />
+
       <section className="tutorial" id="tutorial">
         <div className="container">
           <h2 className="text-center">How does City Council work?</h2>
