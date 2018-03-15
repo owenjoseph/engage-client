@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-
+let kik = () => {
+    console.log(621)
+}
 class Sign_in extends Component {
 
     constructor(props) {
@@ -7,6 +9,60 @@ class Sign_in extends Component {
         this.width = '25%'
         if (/Mobi/.test(navigator.userAgent)) {
             this.width = '100%';
+        }
+        this.state = {
+            login_details: ''
+        }
+        this.sign_in = this.sign_in.bind(this);
+
+    }
+
+    componentDidMount(){
+        this.enter_keypress();
+    }
+    enter_keypress() {
+        let kik = document.getElementById("login_button")
+        var click_event = new MouseEvent("click", {
+            bubbles: true,
+            cancelable: true,
+            view: window
+          });
+        document.addEventListener('keyup', function(event){
+            if(event.keyCode === 13) {
+                kik.dispatchEvent(click_event);
+            }
+        })
+    }
+
+    sign_in(event){
+        this.setState({'login_details':''});
+        let email = document.getElementById('email_address').value;
+        let password = document.getElementById('password').value;
+        if (email.length && password.length) {
+            this.setState({'login_details':'PASS'});
+            console.log('Pass')
+            console.log('Email --> ', email)        
+            console.log('Password --> ', password)
+            var data = {
+                email,
+                password
+            }
+            // var request = new XMLHttpRequest();
+            //     request.open('POST', 'https://council-tag-dev.herokuapp.com/api/login/', true);
+            //     request.setRequestHeader('Content-Type', 'application/json');
+            //     request.send(data);
+            //     request.onload = function(data) {
+            //         console.log(data);
+            //     }
+        }
+        else if (!email.length && !password.length) {
+            this.setState({'login_details':'Missing email and password'});
+        }
+        else if (!email.length){
+            this.setState({'login_details':'Missing email'});
+        }
+        else if (!password.length) {
+            this.setState({'login_details':'Missing Password'});
         }
     }
 
@@ -20,21 +76,22 @@ class Sign_in extends Component {
                         Log-in to your account
                     </div>
                     </h2>
-                    <form className="ui large form">
+                    <div style={{ 'color':'red', 'height':'25px' }}>{ this.state.login_details }</div>                    
+                    <form className="ui large form">                               
                     <div className="ui stacked segment">
                         <div className="field">
                         <div className="ui left icon input">
                             <i className="user icon"></i>
-                            <input type="text" name="email" placeholder="E-mail address" />
+                            <input id="email_address" type="text" name="email" placeholder="E-mail address" />
                         </div>
                         </div>
                         <div className="field">
                         <div className="ui left icon input">
                             <i className="lock icon"></i>
-                            <input type="password" name="password" placeholder="Password" />
+                            <input id="password" type="password" name="password" placeholder="Password" />
                         </div>
                         </div>
-                        <div className="ui fluid large teal submit button">Login</div>
+                        <div id="login_button" className="ui fluid large teal submit button" onClick={ this.sign_in }>Login</div>
                     </div>
 
                     <div className="ui error message"></div>
