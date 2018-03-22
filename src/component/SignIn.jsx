@@ -47,13 +47,17 @@ class Sign_in extends Component {
                 email,
                 password
             }
-            // var request = new XMLHttpRequest();
-            //     request.open('POST', 'https://council-tag-dev.herokuapp.com/api/login/', true);
-            //     request.setRequestHeader('Content-Type', 'application/json');
-            //     request.send(data);
-            //     request.onload = function(data) {
-            //         console.log(data);
-            //     }
+            // console.log(JSON.stringify(data))
+
+            const request = new XMLHttpRequest();
+                request.open('POST', 'https://council-tag-dev.herokuapp.com/api/login/', true);
+                request.setRequestHeader("Content-Type", "application/json");
+                // request.send(JSON.stringify(data))
+                request.send(data)
+                request.onload = function(data) {
+                    let response = JSON.parse(data.target.response);
+                    console.log(response)
+                }
         }
         else if (!email.length && !password.length) {
             this.setState({'login_details':'Missing email and password'});
